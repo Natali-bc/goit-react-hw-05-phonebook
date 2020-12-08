@@ -1,0 +1,48 @@
+.wrapper {
+  margin-bottom: 10px;
+  border: 1px solid midnightblue;
+  width: 300px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  margin: 10px auto;
+  border-radius: 5px;
+}
+
+.contactList {
+  margin-top: 40px;
+}
+
+.contactListItem {
+  list-style: none;
+  margin-bottom: 10px;
+}
+
+.btnDelete {
+  font-size: medium;
+  width: 100px;
+  height: 25px;
+  border-radius: 3px;
+  color: rgb(10, 10, 10);
+}
+.btnDelete:hover {
+  color: wheat;
+  background-color: blue;
+}
+.enter {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+.enterActive {
+  opacity: 1;
+  transform: translateX(0);
+  transition: all 500ms linear;
+}
+.exit {
+  opacity: 1;
+  transform: translateX(0);
+}
+.exitActive {
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: all 500ms linear;
+}
