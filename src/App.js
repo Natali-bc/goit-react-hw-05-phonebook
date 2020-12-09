@@ -5,27 +5,30 @@ import styles from './App.module.css';
 import ContactForm from './components/ContactForm/ContactForm.jsx';
 import ContactList from './components/ContactList/ContactList.jsx';
 import Filter from './components/Filter/Filter.jsx';
+import Notification from './components/Notification/Notification';
+import notificationStyles from './components/Notification/Notification.module.css';
 
 class App extends Component {
   static defaultProps = {};
   static propTypes = {};
 
   state = {
-    contacts: [
+    contacts: [],
+    filter: '',
+    isExists: false,
+  };
+
+  componentDidMount() {
+    const savedContacts = JSON.parse(localStorage.getItem('contacts')) || [
       { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
       { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
       { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-    ],
-    filter: '',
-  };
-
-  componentDidMount() {
-    const savedContacts = localStorage.getItem('contacts');
+    ];
 
     if (savedContacts) {
       this.setState({
-        contacts: JSON.parse(savedContacts),
+        contacts: savedContacts,
       });
     }
   }
@@ -60,7 +63,10 @@ class App extends Component {
 
   addContact = (name, number) => {
     if (this.state.contacts.find(contact => contact.name === name)) {
-      alert(`${name} is already in contacts`);
+      this.setState({ isExists: true });
+      setTimeout(() => {
+        this.setState({ isExists: false });
+      }, 2000);
     } else {
       const contact = {
         id: utils(),
@@ -76,7 +82,7 @@ class App extends Component {
   };
 
   render() {
-    const { contacts, filter } = this.state;
+    const { contacts, filter, isExists } = this.state;
     const visibleContacts = this.handleFilter(contacts, filter);
     return (
       <>
@@ -97,6 +103,14 @@ class App extends Component {
             visibleContacts={visibleContacts}
             handleDelete={this.handleDelete}
           />
+          <CSSTransition
+            in={isExists}
+            timeout={250}
+            classNames={notificationStyles}
+            unmountOnExit
+          >
+            <Notification message="This name is already in your contacts" />
+          </CSSTransition>
         </div>
       </>
     );

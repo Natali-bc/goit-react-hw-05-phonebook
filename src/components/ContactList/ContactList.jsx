@@ -9,7 +9,7 @@ const ContactList = ({ visibleContacts, handleDelete }) => {
     <TransitionGroup component="ul" className={styles.contactList}>
       {visibleContacts.map(contact => {
         return (
-          <CSSTransition key={contact.id} timeout={500} classNames={styles}>
+          <CSSTransition key={contact.id} timeout={250} classNames={styles}>
             <ContactListItem
               contact={contact}
               handleDelete={() => handleDelete(contact.id)}
